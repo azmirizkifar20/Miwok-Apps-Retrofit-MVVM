@@ -1,11 +1,10 @@
-package org.d3if4055.miwokapps.ui.fragment
+package org.d3if4055.miwokapps.ui.miwok
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,9 +16,7 @@ import org.d3if4055.miwokapps.MainActivity
 import org.d3if4055.miwokapps.R
 import org.d3if4055.miwokapps.data.Miwok
 import org.d3if4055.miwokapps.databinding.FragmentMiwokBinding
-import org.d3if4055.miwokapps.ui.recyclerview.MiwokAdapter
-import org.d3if4055.miwokapps.ui.recyclerview.RecyclerViewClickListener
-import org.d3if4055.miwokapps.viewmodel.MiwokViewModel
+import org.d3if4055.miwokapps.utils.RecyclerViewClickListener
 
 @Suppress("SpellCheckingInspection")
 class MiwokFragment : Fragment(),
@@ -47,7 +44,8 @@ class MiwokFragment : Fragment(),
         binding.miwokVm = viewModel
 
         viewModel.data.observe(viewLifecycleOwner, Observer {
-            val adapter = MiwokAdapter(it)
+            val dataFix = it.distinctBy { miwok -> miwok.category }
+            val adapter = MiwokAdapter(dataFix)
             val recyclerview = binding.rvMiwok
             recyclerview.adapter = adapter
             recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
@@ -64,8 +62,8 @@ class MiwokFragment : Fragment(),
     }
 
     override fun onRecyclerViewItemMiwokClicked(view: View, miwok: Miwok) {
-        val bundle = bundleOf("wordlist" to miwok.wordList,
-            "background" to miwok.background, "category" to miwok.category)
+        val bundle = Bundle()
+        bundle.putString("category", miwok.category)
         view.findNavController().navigate(R.id.action_miwokFragment_to_wordListFragment, bundle)
     }
 

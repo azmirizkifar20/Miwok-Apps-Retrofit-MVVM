@@ -1,4 +1,4 @@
-package org.d3if4055.miwokapps.ui.recyclerview
+package org.d3if4055.miwokapps.ui.miwok
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.d3if4055.miwokapps.R
 import org.d3if4055.miwokapps.data.Miwok
 import org.d3if4055.miwokapps.databinding.RecyclerviewMiwokBinding
+import org.d3if4055.miwokapps.utils.RecyclerViewClickListener
 
 @Suppress("SpellCheckingInspection")
 class MiwokAdapter(

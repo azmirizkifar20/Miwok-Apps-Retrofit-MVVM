@@ -6,13 +6,13 @@
     <data>
         <variable
             name="miwokVm"
-            type="org.d3if4055.miwokapps.viewmodel.MiwokViewModel" />
+            type="org.d3if4055.miwokapps.ui.miwok.MiwokViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.MiwokFragment">
+        tools:context=".ui.miwok.MiwokFragment">
 
         <ProgressBar
             android:layout_width="wrap_content"

@@ -18,7 +18,7 @@ private val retrofit = Retrofit.Builder()
 
 //API
 interface MiwokService {
-    @GET("miwok.json")
+    @GET("miwok-v2.php")
     suspend fun showList(): List<Miwok>
 }
 

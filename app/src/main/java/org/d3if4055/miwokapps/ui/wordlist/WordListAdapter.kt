@@ -1,4 +1,4 @@
-package org.d3if4055.miwokapps.ui.recyclerview
+package org.d3if4055.miwokapps.ui.wordlist
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,13 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.d3if4055.miwokapps.R
-import org.d3if4055.miwokapps.data.WordList
+import org.d3if4055.miwokapps.data.Miwok
 import org.d3if4055.miwokapps.databinding.RecyclerviewWordlistBinding
+import org.d3if4055.miwokapps.utils.RecyclerViewClickListener
 
 @Suppress("SpellCheckingInspection")
 class WordListAdapter(
-    private val wordList: List<WordList>,
-    private val background: String
+    private val miwok: List<Miwok>
 ) : RecyclerView.Adapter<WordListAdapter.WordListViewHolder>() {
 
     var listener: RecyclerViewClickListener? = null
@@ -23,7 +23,7 @@ class WordListAdapter(
         val recyclerviewWordlistBinding: RecyclerviewWordlistBinding
     ) : RecyclerView.ViewHolder(recyclerviewWordlistBinding.root)
 
-    override fun getItemCount() = wordList.size
+    override fun getItemCount() = miwok.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = WordListViewHolder(
         DataBindingUtil.inflate(LayoutInflater.from(parent.context),
@@ -31,18 +31,18 @@ class WordListAdapter(
     )
 
     override fun onBindViewHolder(holder: WordListViewHolder, position: Int) {
-        holder.recyclerviewWordlistBinding.listWordList.setBackgroundColor(Color.parseColor(background))
-        holder.recyclerviewWordlistBinding.tvInggris.text = wordList[position].defaultWord
-        holder.recyclerviewWordlistBinding.tvMiwok.text = wordList[position].miwokWord
+        holder.recyclerviewWordlistBinding.listWordList.setBackgroundColor(Color.parseColor(miwok[position].background))
+        holder.recyclerviewWordlistBinding.tvInggris.text = miwok[position].defaultWord
+        holder.recyclerviewWordlistBinding.tvMiwok.text = miwok[position].miwokWord
 
         // image
-        if (wordList[position].image == null) {
+        if (miwok[position].image == "") {
             Glide.with(holder.itemView.context).clear(holder.recyclerviewWordlistBinding.image)
             holder.recyclerviewWordlistBinding.image.setImageDrawable(null)
             holder.recyclerviewWordlistBinding.image.visibility = View.GONE
         } else {
             Glide.with(holder.itemView.context)
-                .load("http://dif.indraazimi.com/miwok/${wordList[position].image}")
+                .load("http://dif.indraazimi.com/miwok/${miwok[position].image}")
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .dontAnimate()
                 .into(holder.recyclerviewWordlistBinding.image)
@@ -50,7 +50,7 @@ class WordListAdapter(
 
         // onclick
         holder.recyclerviewWordlistBinding.listWordList.setOnClickListener {
-            listener?.onRecyclerViewItemWordListClicked(it, wordList[position])
+            listener?.onRecyclerViewItemWordListClicked(it, miwok[position])
         }
     }
 }

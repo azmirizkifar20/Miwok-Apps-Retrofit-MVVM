@@ -1,4 +1,4 @@
-package org.d3if4055.miwokapps.viewmodel
+package org.d3if4055.miwokapps.ui.miwok
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

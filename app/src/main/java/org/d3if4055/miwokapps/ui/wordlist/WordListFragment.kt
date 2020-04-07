@@ -31,7 +31,8 @@ class WordListFragment : Fragment(),
     ): View? {
         judul()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_word_list, container, false)
-        viewModel = ViewModelProvider(this).get(MiwokViewModel::class.java)
+        val factory = MiwokViewModel.Factory(activity!!.application)
+        viewModel = ViewModelProvider(this, factory).get(MiwokViewModel::class.java)
         binding.lifecycleOwner = this
         binding.miwokVm = viewModel
 
@@ -46,7 +47,7 @@ class WordListFragment : Fragment(),
             val listData = mutableListOf<Miwok>()
             val category = arguments?.getString("category")
 
-            viewModel.data.observe(viewLifecycleOwner, Observer {
+            viewModel.listMiwok.observe(viewLifecycleOwner, Observer {
                 it.map {  miwok ->
                     if (miwok.category == category) {
                         listData.add(miwok)
@@ -61,11 +62,11 @@ class WordListFragment : Fragment(),
                 adapter.listener = this
             })
 
-            viewModel.response.observe(viewLifecycleOwner, Observer {
-                if (it.isNotEmpty()) {
-                    Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
-                }
-            })
+//            viewModel.response.observe(viewLifecycleOwner, Observer {
+//                if (it.isNotEmpty()) {
+//                    Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
+//                }
+//            })
 
         }
 

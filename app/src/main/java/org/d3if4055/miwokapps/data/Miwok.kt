@@ -1,6 +1,9 @@
 package org.d3if4055.miwokapps.data
 
+import com.squareup.moshi.JsonClass
+
 @Suppress("SpellCheckingInspection")
+@JsonClass(generateAdapter = true)
 data class Miwok (
     val category: String,
     val background: String,

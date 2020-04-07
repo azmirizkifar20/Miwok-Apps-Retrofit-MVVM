@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,17 +34,17 @@ class MiwokFragment : Fragment(),
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_miwok, container, false)
         binding.lifecycleOwner = this
 
-
         // Inflate the layout for this fragment
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MiwokViewModel::class.java)
+        val factory = MiwokViewModel.Factory(activity!!.application)
+        viewModel = ViewModelProvider(this, factory).get(MiwokViewModel::class.java)
         binding.miwokVm = viewModel
 
-        viewModel.data.observe(viewLifecycleOwner, Observer {
+        viewModel.listMiwok.observe(viewLifecycleOwner, Observer {
             val dataFix = it.distinctBy { miwok -> miwok.category }
             val adapter = MiwokAdapter(dataFix)
             val recyclerview = binding.rvMiwok
@@ -54,11 +55,11 @@ class MiwokFragment : Fragment(),
             adapter.listener = this
         })
 
-        viewModel.response.observe(viewLifecycleOwner, Observer {
-            if (it.isNotEmpty()) {
-                Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
-            }
-        })
+//        viewModel.response.observe(viewLifecycleOwner, Observer {
+//            if (it.isNotEmpty()) {
+//                Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
+//            }
+//        })
     }
 
     override fun onRecyclerViewItemMiwokClicked(view: View, miwok: Miwok) {
